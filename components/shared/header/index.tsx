@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
+import ModeToggle from "./mode-toggle";
 
-const Header = () => {
+export const Header = () => {
   return (
     <header className="w-full border-b">
       <div className="wrapper flex align-middle justify-between py-2 px-4">
@@ -25,7 +26,8 @@ const Header = () => {
             </span>
           </Link>
         </div>
-        <div className="space-x-2 py-2">
+        <div className="space-x-2 align-baseline flex items-center">
+          <ModeToggle />
           <Button asChild variant="ghost">
             <Link href="/cart">
               <ShoppingCart className="h-6 w-6" />
@@ -43,5 +45,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;
