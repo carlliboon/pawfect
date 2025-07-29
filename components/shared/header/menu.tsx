@@ -1,7 +1,14 @@
 import { Button } from "@/components/ui/button";
 import ModeToggle from "./mode-toggle";
 import Link from "next/link";
-import { ShoppingCart, UserIcon } from "lucide-react";
+import { EllipsisVertical, ShoppingCart, UserIcon } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Menu = () => {
   return (
@@ -20,6 +27,30 @@ const Menu = () => {
             Sign In
           </Link>
         </Button>
+      </nav>
+      <nav className="flex md:hidden align-middle">
+        <ModeToggle />
+        <Sheet>
+          <SheetTrigger className="align-middle">
+            <EllipsisVertical />
+          </SheetTrigger>
+          <SheetContent className="flex flex-col items-start px-2">
+            <SheetTitle></SheetTitle>
+            <Button asChild variant="ghost">
+              <Link href="/cart" className="flex items-center">
+                <ShoppingCart className="h-6 w-6" />
+                Cart
+              </Link>
+            </Button>
+            <Button asChild className="w-full">
+              <Link href="/sign-in" className="flex items-center">
+                <UserIcon className="h-6 w-6" />
+                Sign In
+              </Link>
+            </Button>
+            <SheetDescription></SheetDescription>
+          </SheetContent>
+        </Sheet>
       </nav>
     </div>
   );
