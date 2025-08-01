@@ -3,21 +3,12 @@ import loader from "@/assets/loader.gif";
 
 const LoadingPage = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-      }}
-    >
+    <div className="flex items-center justify-center h-screen w-screen">
       <Image
         src={loader}
         alt="Loading..."
-        width={150}
-        height={150}
-        className="mx-auto mt-20"
+        className="w-[150px] h-auto mx-auto"
+        priority
       />
     </div>
   );
