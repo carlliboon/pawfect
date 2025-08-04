@@ -1,12 +1,11 @@
 "use server";
 
-import { PrismaClient } from "../generated/prisma";
+import { prisma } from "@/db/prisma";
 import { toPlainObject } from "../utils";
 import { LATEST_PRODUCTS_LIMIT } from "../constants";
 
 // Get latest products
 export async function getLatestProducts() {
-  const prisma = new PrismaClient();
   try {
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
@@ -19,4 +18,12 @@ export async function getLatestProducts() {
   } finally {
     await prisma.$disconnect();
   }
+}
+
+// Get single product by it's slug
+
+export async function getProductBySlug(slug: string) {
+  return await prisma.product.findFirst({
+    where: { slug: slug },
+  });
 }

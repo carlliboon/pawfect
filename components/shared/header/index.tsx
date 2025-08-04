@@ -6,24 +6,22 @@ import Menu from "./menu";
 export const Header = () => {
   return (
     <header className="w-full border-b">
-      <div className="wrapper flex align-middle justify-between py-2 px-4">
-        <div className="flex-start ">
-          <Link
-            href="/"
-            className="flex flex-start items-center gap-2 align-middle"
-          >
-            <Image
-              src="/images/logo.svg"
-              alt={`${APP_NAME} Logo`}
-              width={48}
-              height={48}
-              priority={true}
-            />
-            <span className="hidden lg:block font-bold text-2xl ml-3">
-              {APP_NAME}
-            </span>
-          </Link>
-        </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-2 px-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/images/logo.svg"
+            alt={`${APP_NAME} Logo`}
+            width={48}
+            height={48}
+            priority={true}
+          />
+          <span className="hidden sm:block font-bold text-2xl ml-2">
+            {APP_NAME}
+          </span>
+        </Link>
+
+        {/* Menu */}
         <Menu />
       </div>
     </header>

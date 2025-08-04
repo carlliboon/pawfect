@@ -9,7 +9,7 @@ import { Product } from "@/types";
 
 export const ProductCard = (product: Product) => {
   return (
-    <Link href={`/products/${product.slug}`} className="block">
+    <Link href={`/product/${product.slug}`} className="block">
       <Card
         key={product.id}
         className="w-[260px] h-[400px] flex flex-col justify-between shadow-lg pt-0 transform transition-transform duration-600 hover:scale-105 hover:shadow-xl cursor-pointer"

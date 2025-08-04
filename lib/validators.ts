@@ -17,6 +17,12 @@ export const insertProductSchema = z.object({
   description: z
     .string()
     .min(3, "Description must be at least 3 characters long"),
+  shippingDetails: z
+    .string()
+    .min(3, "Shipping details must be at least 3 characters long"),
+  returnPolicy: z
+    .string()
+    .min(3, "Return policy must be at least 3 characters long"),
   stock: z.coerce.number(),
   images: z.array(z.string()).min(1, "Product must have at least one image"),
   isFeatured: z.boolean(),
