@@ -10,6 +10,10 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // ⬇️ This tells ESLint (with flat config) to ignore your generated code
+  {
+    ignores: ["lib/generated/**"],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
 

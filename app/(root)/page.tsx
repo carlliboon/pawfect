@@ -11,6 +11,8 @@ export default async function Home() {
     ...product,
     price: product.price.toString(),
     rating: product.rating?.toString?.() ?? "",
+    shippingDetails: product.shippingDetails ?? "",
+    returnPolicy: product.returnPolicy ?? "",
   }));
 
   return (
