@@ -1,4 +1,20 @@
+import { hashSync } from "bcrypt-ts-edge";
+
 const sampleData = {
+  users: [
+    {
+      name: "Carl",
+      email: "carl@admin.com",
+      password: hashSync("password", 10),
+      role: "admin",
+    },
+    {
+      name: "John",
+      email: "john@gmail.com",
+      password: hashSync("password", 10),
+      role: "user",
+    },
+  ],
   products: [
     {
       name: "Large Outdoor Waterproof Dog House",
