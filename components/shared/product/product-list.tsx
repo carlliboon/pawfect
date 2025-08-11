@@ -15,7 +15,7 @@ export const ProductList = ({
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="max-w-[1600px] mx-auto">
+      <div className="flex flex-col max-w-7xl ps-5 mx-auto">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6">
           {title}
         </h2>

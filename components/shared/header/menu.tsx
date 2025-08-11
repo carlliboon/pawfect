@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import UserButton from "./user-button";
 
 const Menu = () => {
   return (
@@ -21,12 +22,7 @@ const Menu = () => {
             Cart
           </Link>
         </Button>
-        <Button asChild>
-          <Link href="/sign-in">
-            <UserIcon className="h-6 w-6" />
-            Sign In
-          </Link>
-        </Button>
+        <UserButton />
       </nav>
       <nav className="flex md:hidden align-middle">
         <ModeToggle />
@@ -42,12 +38,7 @@ const Menu = () => {
                 Cart
               </Link>
             </Button>
-            <Button asChild className="w-full">
-              <Link href="/sign-in" className="flex items-center">
-                <UserIcon className="h-6 w-6" />
-                Sign In
-              </Link>
-            </Button>
+            <UserButton />
             <SheetDescription></SheetDescription>
           </SheetContent>
         </Sheet>
