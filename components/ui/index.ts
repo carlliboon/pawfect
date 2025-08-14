@@ -5,3 +5,5 @@ export * from "./dropdown-menu";
 export * from "./input";
 export * from "./label";
 export * from "./sheet";
+export * from "./badge";
+export * from "./sonner";

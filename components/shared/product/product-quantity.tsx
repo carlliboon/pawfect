@@ -10,11 +10,7 @@ export default function QuantityBox() {
   const decrement = () => setQuantity((prev) => Math.max(prev - 1, 0));
 
   return (
-    <div className="flex flex-col gap-2 mt-4 w-[110px]">
-      <Label htmlFor="quantity" className="text-xs text-gray-500 font-light">
-        Quantity
-      </Label>
-
+    <div className="flex flex-col gap-2 mt-4 w-[100px]">
       {/* Outer border + radius */}
       <div className="flex items-center border rounded-md overflow-hidden">
         {/* Minus button */}

@@ -1,32 +1,34 @@
 import { neonConfig } from "@neondatabase/serverless";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaClient } from "@/lib/generated/prisma";
-import ws from "ws";
 
-// Sets up WebSocket connections, which enables Neon to use WebSocket communication.
-neonConfig.webSocketConstructor = ws;
-const connectionString = `${process.env.DATABASE_URL}`;
+// Use HTTP/fetch (faster in serverless) – no ws needed
+neonConfig.poolQueryViaFetch = true;
 
-// Creates a new connection pool using the provided connection string, allowing multiple concurrent connections.
-// const pool = new Pool({ connectionString });
+function createPrisma() {
+  const adapter = new PrismaNeon({
+    connectionString: process.env.DATABASE_URL!,
+  });
 
-// Instantiates the Prisma adapter using the Neon connection pool to handle the connection between Prisma and Neon.
-const adapter = new PrismaNeon({ connectionString });
-
-// Extends the PrismaClient with a custom result transformer to convert the price and rating fields to strings.
-export const prisma = new PrismaClient({ adapter }).$extends({
-  result: {
-    product: {
-      price: {
-        compute(product) {
-          return product.price.toString();
-        },
-      },
-      rating: {
-        compute(product) {
-          return product.rating.toString();
-        },
+  // Build the extended client (your Decimal→string transforms)
+  return new PrismaClient({ adapter }).$extends({
+    result: {
+      product: {
+        price: { compute: (p) => p.price.toString() },
+        rating: { compute: (p) => p.rating.toString() },
       },
     },
-  },
-});
+  });
+}
+
+// Infer the correct extended type
+export type PrismaClientX = ReturnType<typeof createPrisma>;
+
+// Store the extended type on globalThis (singleton)
+const g = globalThis as unknown as { prisma?: PrismaClientX };
+
+export const prisma: PrismaClientX = g.prisma ?? createPrisma();
+
+if (process.env.NODE_ENV !== "production") {
+  g.prisma = prisma;
+}

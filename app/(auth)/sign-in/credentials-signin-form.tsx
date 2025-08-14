@@ -1,7 +1,6 @@
 "use client";
 
-import { Button, Label } from "@/components/ui";
-import { Input } from "@/components/ui";
+import { Button, Label, Input } from "@/components/ui";
 import { signInDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";

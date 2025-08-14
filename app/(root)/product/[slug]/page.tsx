@@ -1,15 +1,9 @@
 import { ProductPrice } from "@/components/shared/product/product-price";
 import QuantityBox from "@/components/shared/product/product-quantity";
-import {
-  Button,
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui";
+import { Button } from "@/components/ui";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
-import { ProductGallery } from "@/components/shared/product/product-gallery";
+import { ProductGalleryWW } from "./product-gallery-ww";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -19,87 +13,84 @@ const ProductDetailsPage = async (props: {
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
+  const outOfStock = product.stock <= 0;
+
   return (
-    <>
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-5">
-          {/* Images Column */}
-          <div className="col-span-3">
-            <ProductGallery images={product.images} />
-          </div>
-          {/* Details Column */}
-          <div className="col-span-2 p-5">
-            <div className="flex flex-col gap-2">
-              <h1 className="text-xs text-gray-500 font-light">
-                {product.brand} {product.category}
+    <section className="py-6 lg:py-10">
+      {/* same container width as header */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Left: Gallery (wider). Right: Details */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-6 lg:gap-12 items-start">
+          {/* Gallery with arrows + thumbs */}
+          <ProductGalleryWW images={product.images} />
+
+          {/* Details */}
+          <div className="w-full">
+            {/* Title / Rating / Price */}
+            <div className="space-y-3">
+              <h1 className="text-3xl sm:text-[34px] lg:text-[36px] font-semibold leading-tight">
+                {product.name}
               </h1>
-              <h1 className="font-semibold text-2xl">{product.name}</h1>
-              <div className="flex flex-col sm:flex-row sm:items-center mt-3">
-                {product.stock > 0 ? (
-                  <ProductPrice value={Number(product.price)} />
+
+              {/* tiny brand/category line to mimic reference site */}
+              <p className="text-[13px] text-gray-500">
+                {product.brand} · {product.category}
+              </p>
+
+              {/* rating line */}
+              <div className="flex items-center gap-2 text-gray-800">
+                <span className="text-lg">★★★★★</span>
+                <span className="text-sm text-gray-600">
+                  ({product.numReviews})
+                </span>
+              </div>
+
+              {/* price – prominent */}
+              <div className="text-2xl sm:text-3xl font-semibold">
+                {outOfStock ? (
+                  <span className="text-red-500">Out of stock</span>
                 ) : (
-                  <span className=" text-red-500">Out of stock</span>
+                  <ProductPrice value={Number(product.price)} />
                 )}
               </div>
-              <p className="text-sm">
-                {product.rating} of {product.numReviews} Reviews
-              </p>
             </div>
-            <QuantityBox />
-            <div className="w-max">
-              <form className="flex gap-2 mt-10">
-                <Button
-                  variant="outline"
-                  disabled={product.stock <= 0 && true}
-                  className="w-full min-h-[50px]"
-                >
-                  Add To Cart
-                </Button>
-                <Button
-                  disabled={product.stock <= 0 && true}
-                  className="w-full min-h-[50px]"
-                >
-                  Buy Now
-                </Button>
-              </form>
-            </div>
-            <Accordion
-              type="single"
-              collapsible
-              defaultValue="product-information"
-              className="mt-14 w-[450px]"
-            >
-              {product.description && (
-                <AccordionItem value="product-information">
-                  <AccordionTrigger>Product Information</AccordionTrigger>
-                  <AccordionContent>
-                    <p>{product.description}</p>
-                  </AccordionContent>
-                </AccordionItem>
-              )}
 
+            {/* Description (open, larger, no accordion) */}
+            <div className="mt-5 text-[15px] sm:text-base lg:text-[15px] leading-7 text-gray-700">
+              <p>{product.description}</p>
               {product.shippingDetails && (
-                <AccordionItem value="shipping-details">
-                  <AccordionTrigger>Shipping Details</AccordionTrigger>
-                  <AccordionContent>
-                    <p>{product.description}</p>
-                  </AccordionContent>
-                </AccordionItem>
+                <p className="mt-3">{product.shippingDetails}</p>
               )}
-
               {product.returnPolicy && (
-                <AccordionItem value="return-policy">
-                  <AccordionTrigger>Return Policy</AccordionTrigger>
-                  <AccordionContent>
-                    <p>{product.description}</p>
-                  </AccordionContent>
-                </AccordionItem>
+                <p className="mt-3">{product.returnPolicy}</p>
               )}
-            </Accordion>
+            </div>
+
+            {/* Quantity + Add to Cart (like reference: small qty + big CTA) */}
+            <form className="mt-6 flex items-baseline-last gap-5">
+              <div className="w-[88px]">
+                <QuantityBox />
+              </div>
+              <Button
+                disabled={outOfStock}
+                className="
+                  h-12 sm:h-12
+                  flex-1
+                  rounded-full
+                  bg-[#89613F] hover:bg-[#724e31]
+                  text-white text-[18px] font-semibold
+                "
+              >
+                Add to Cart
+              </Button>
+            </form>
+
+            {/* trust badges area (optional slot) */}
+            {/* <Badges /> */}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
