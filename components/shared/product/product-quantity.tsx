@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Label, Button, Input } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 
 export default function QuantityBox() {
   const [quantity, setQuantity] = useState(0);

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Label, Input } from "@/components/ui";
-import { signInDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
@@ -39,7 +38,6 @@ const CredentialsSignInForm = () => {
             type="email"
             required
             autoComplete="email"
-            defaultValue={signInDefaultValues.email}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -50,7 +48,6 @@ const CredentialsSignInForm = () => {
             type="password"
             required
             autoComplete="password"
-            defaultValue={signInDefaultValues.password}
           />
         </div>
         <div>
