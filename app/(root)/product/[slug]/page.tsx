@@ -1,6 +1,5 @@
 import { ProductPrice } from "@/components/shared/product/product-price";
-import QuantityBox from "@/components/shared/product/product-quantity";
-import { Button } from "@/components/ui";
+import AddToCartForm from "@/components/shared/product/add-to-cart-form";
 import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
 import { ProductGalleryWW } from "./product-gallery-ww";
@@ -66,24 +65,17 @@ const ProductDetailsPage = async (props: {
               )}
             </div>
 
-            {/* Quantity + Add to Cart (like reference: small qty + big CTA) */}
-            <form className="mt-6 flex items-baseline-last gap-5">
-              <div className="w-[88px]">
-                <QuantityBox />
-              </div>
-              <Button
-                disabled={outOfStock}
-                className="
-                  h-12 sm:h-12
-                  flex-1
-                  rounded-full
-                  bg-[#89613F] hover:bg-[#724e31]
-                  text-white text-[18px] font-semibold
-                "
-              >
-                Add to Cart
-              </Button>
-            </form>
+            {/* Add to Cart Form */}
+            <AddToCartForm 
+              product={{
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+                price: product.price.toString(),
+                images: product.images,
+                stock: product.stock,
+              }}
+            />
 
             {/* trust badges area (optional slot) */}
             {/* <Badges /> */}

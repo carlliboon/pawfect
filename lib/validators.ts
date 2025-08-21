@@ -59,3 +59,13 @@ export const cartItemSchema = z.object({
   image: z.string().min(1, "Image is required"),
   price: currency,
 });
+
+export const insertCartSchema = z.object({
+  items: z.array(cartItemSchema).min(1, "At least one item is required"),
+  itemsPrice: currency,
+  totalPrice: currency,
+  shippingPrice: currency,
+  taxPrice: currency,
+  sessionCartId: z.string().min(1, "Session cart ID is required"),
+  userId: z.string().optional().nullable()
+});
